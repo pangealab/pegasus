@@ -1,4 +1,4 @@
-# Local variables used to reduce repetition
+# Local Variables
 locals {
   node_username = "ubuntu"
   private_key = file(var.private_key)
@@ -9,16 +9,24 @@ locals {
   )
 }
 
-# Variables
+# Private SSH Key File
 variable "private_key" {
   description = "The local public key , e.g. ~/.ssh/rancher"
   default     = "~/.ssh/rancher"
 }
 
+# AWS Region
 variable "aws_region" {
   type        = string
   description = "AWS region used for all resources"
   default     = "us-east-2"
+}
+
+# Docker Version
+variable "docker_version" {
+  type        = string
+  description = "Docker version to install on nodes"
+  default     = "19.03"
 }
 
 # VPC CIDR

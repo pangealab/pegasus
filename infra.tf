@@ -96,7 +96,56 @@ resource "aws_security_group" "rancher_sg_allowall" {
 }
 
 # AWS Keypair
-resource "aws_key_pair" "quickstart_key_pair" {
+resource "aws_key_pair" "rancher_key_pair" {
   key_name = "rancher"
   public_key = local.public_key
+}
+
+# Rancher Server
+resource "aws_instance" "rancher_server" {
+  ami = data.aws_ami.ubuntu.id
+  instance_type = var.rancher_instance_type
+  key_name = aws_key_pair.rancher_key_pair.key_name
+  vpc_security_group_ids = [aws_security_group.rancher_sg_allowall.id]
+  user_data = templatefile(
+    join("/", [path.module, "files/userdata_rancher_server.template"]),
+    {
+      docker_version = var.docker_version
+      username       = local.node_username
+    }
+  )
+  root_block_device {
+    volume_size = 16
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "echo 'Waiting for cloud-init to complete...'",
+      "cloud-init status --wait > /dev/null",
+      "echo 'Completed cloud-init!'",
+    ]
+    connection {
+      type        = "ssh"
+      host        = self.public_ip
+      user        = local.node_username
+      private_key = local.private_key
+    }
+  }
+  tags = merge(
+    local.common_tags,
+    map(
+      "Name", "Rancher Server"
+    )
+  )
+}
+
+# Rancher Server EIP
+resource "aws_eip" "rancher_eip" {
+  instance = aws_instance.rancher_server.id
+  vpc      = true
+  tags = merge(
+    local.common_tags,
+    map(
+      "Name", "Rancher Server"
+    )
+  )
 }
