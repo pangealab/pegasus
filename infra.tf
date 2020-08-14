@@ -71,6 +71,7 @@ resource "aws_route_table_association" "public-subnet" {
 resource "aws_security_group" "rancher_sg_allowall" {
   name        = "rancher-allowall"
   description = "Rancher SG Allow All Traffic"
+  vpc_id      = aws_vpc.rancher.id
 
   ingress {
     from_port   = "0"
