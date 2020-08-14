@@ -1,6 +1,12 @@
 # Local variables used to reduce repetition
 locals {
   node_username = "ubuntu"
+  private_key = file(var.private_key)
+  public_key = file(join(".", [var.private_key,"pub"]))
+  common_tags = map(
+    "Project", "rancher",
+    "Creator", "rancher-quickstart"
+  )
 }
 
 # Variables
