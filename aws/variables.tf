@@ -29,7 +29,7 @@ variable "prefix" {
 variable "rancher_instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
-  default     = "r5a.large"
+  default     = "r5a.xlarge"
 }
 
 variable "node_instance_type" {
