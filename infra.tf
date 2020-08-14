@@ -111,7 +111,8 @@ resource "aws_instance" "rancher_server" {
     join("/", [path.module, "files/userdata_rancher_server.template"]),
     {
       docker_version = var.docker_version
-      username       = local.node_username
+      rke_version = var.rke_version
+      username = local.node_username
     }
   )
   root_block_device {
