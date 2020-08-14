@@ -114,8 +114,8 @@ resource "aws_security_group" "rancher_sg_allowall" {
 
 # AWS Keypair
 resource "aws_key_pair" "quickstart_key_pair" {
-  key_name_prefix = "rancher"
-  public_key      = local.public_key
+  key_name = "rancher"
+  public_key = local.public_key
 }
 
 # AWS EC2 instance for creating a single node RKE cluster and installing the Rancher server
