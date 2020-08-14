@@ -26,7 +26,7 @@ variable "aws_region" {
 variable "docker_version" {
   type        = string
   description = "Docker version to install on all servers"
-  default     = "19.03.8"
+  default     = "18.09"
 }
 
 # RKE Version
