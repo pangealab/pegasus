@@ -151,7 +151,7 @@ resource "aws_instance" "quickstart_node" {
 }
 
 # Node Elastic IP
-resource "aws_eip" "rancher_eip" {
+resource "aws_eip" "node_eip" {
   instance = aws_instance.quickstart_node.id
   vpc      = true
 }
