@@ -25,8 +25,15 @@ variable "aws_region" {
 # Docker Version
 variable "docker_version" {
   type        = string
-  description = "Docker version to install on nodes"
+  description = "Docker version to install on all servers"
   default     = "19.03"
+}
+
+# RKE Version
+variable "rke_version" {
+  type        = string
+  description = "RKE version to install on Rancher Server"
+  default     = "v1.1.4"
 }
 
 # VPC CIDR
