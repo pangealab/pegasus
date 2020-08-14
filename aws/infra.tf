@@ -98,16 +98,25 @@ resource "aws_instance" "rancher_server" {
     }
   }
 
-  tags = {
-    Name    = "${var.prefix}-rancher-server"
-    Creator = "rancher-quickstart"
-  }
+  tags = merge(
+    local.common_tags,
+    map(
+      "Name", "Rancher Server"
+    )
+  )
+
 }
 
 # Rancher Elastic IP
 resource "aws_eip" "rancher_eip" {
   instance = aws_instance.rancher_server.id
   vpc      = true
+  tags = merge(
+    local.common_tags,
+    map(
+      "Name", "Rancher Server"
+    )
+  )
 }
 
 # AWS EC2 instance for creating a single node workload cluster
@@ -144,14 +153,23 @@ resource "aws_instance" "quickstart_node" {
     }
   }
 
-  tags = {
-    Name    = "${var.prefix}-quickstart-node"
-    Creator = "rancher-quickstart"
-  }
+  tags = merge(
+    local.common_tags,
+    map(
+      "Name", "Rancher Node"
+    )
+  )
+  
 }
 
 # Node Elastic IP
 resource "aws_eip" "node_eip" {
   instance = aws_instance.quickstart_node.id
   vpc      = true
+  tags = merge(
+    local.common_tags,
+    map(
+      "Name", "${var.prefix}-quickstart-node-eip"
+    )
+  )
 }

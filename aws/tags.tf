@@ -4,5 +4,6 @@
 locals {
   common_tags = map(
     "Project", "rancher",
+    "Creator", "rancher-quickstart"
   )
 }
