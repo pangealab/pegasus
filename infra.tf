@@ -113,6 +113,7 @@ resource "aws_instance" "rancher_server" {
       docker_version = var.docker_version
       rke_version = var.rke_version
       kubectl_version = var.kubectl_version
+      helm_version = var.helm_version
       username = local.node_username
     }
   )

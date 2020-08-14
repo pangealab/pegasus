@@ -43,6 +43,13 @@ variable "kubectl_version" {
   default     = "v1.18.0"
 }
 
+# HELM Version
+variable "helm_version" {
+  type        = string
+  description = "Helm version to install on Rancher Server"
+  default     = "v3.3.0"
+}
+
 # VPC CIDR
 variable "vpc_cidr" {
   description = "The CIDR block for the VPC, e.g: 13.0.0.0/16"
