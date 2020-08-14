@@ -3,16 +3,16 @@
 // TODO - use null defaults
 
 # Required
-variable "aws_access_key" {
-  type        = string
-  description = "AWS access key used to create infrastructure"
-}
+# variable "aws_access_key" {
+#   type        = string
+#   description = "AWS access key used to create infrastructure"
+# }
 
 # Required
-variable "aws_secret_key" {
-  type        = string
-  description = "AWS secret key used to create AWS infrastructure"
-}
+# variable "aws_secret_key" {
+#   type        = string
+#   description = "AWS secret key used to create AWS infrastructure"
+# }
 
 variable "aws_region" {
   type        = string
@@ -26,7 +26,13 @@ variable "prefix" {
   default     = "quickstart"
 }
 
-variable "instance_type" {
+variable "rancher_instance_type" {
+  type        = string
+  description = "Instance type used for all EC2 instances"
+  default     = "t3a.medium"
+}
+
+variable "node_instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
   default     = "t3a.medium"
@@ -72,4 +78,14 @@ variable "rancher_server_admin_password" {
 # Local variables used to reduce repetition
 locals {
   node_username = "ubuntu"
+}
+
+# VPC CIDR
+variable "vpc_cidr" {
+  description = "The CIDR block for the VPC, e.g: 13.0.0.0/16"
+}
+
+# SUBNET CIDR
+variable "subnet_cidr" {
+  description = "The CIDR block for the public subnet, e.g: 13.0.1.0/24"
 }
