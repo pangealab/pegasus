@@ -26,14 +26,14 @@ variable "aws_region" {
 variable "docker_version" {
   type        = string
   description = "Docker version to install on all servers"
-  default     = "18.09"
+  default     = "19.03"
 }
 
 # RKE Version
 variable "rke_version" {
   type        = string
   description = "RKE version to install on Rancher Server"
-  default     = "v1.1.3"
+  default     = "v1.1.4"
 }
 
 # KUBECT Version
