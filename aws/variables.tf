@@ -4,6 +4,11 @@ locals {
 }
 
 # Variables
+variable "private_key" {
+  description = "The local public key , e.g. ~/.ssh/rancher"
+  default     = "~/.ssh/rancher"
+}
+
 variable "aws_region" {
   type        = string
   description = "AWS region used for all resources"

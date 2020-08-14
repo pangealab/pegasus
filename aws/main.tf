@@ -22,7 +22,8 @@ module "rancher_common" {
   node_public_ip         = aws_instance.rancher_server.public_ip
   node_internal_ip       = aws_instance.rancher_server.private_ip
   node_username          = local.node_username
-  ssh_private_key_pem    = tls_private_key.global_key.private_key_pem
+  # ssh_private_key_pem    = tls_private_key.global_key.private_key_pem
+  ssh_private_key_pem    = file("~/.ssh/rancher")
   rke_kubernetes_version = var.rke_kubernetes_version
   cert_manager_version = var.cert_manager_version
   rancher_version      = var.rancher_version

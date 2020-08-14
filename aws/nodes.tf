@@ -1,24 +1,28 @@
 # SSH key pair
-resource "tls_private_key" "global_key" {
-  algorithm = "RSA"
-  rsa_bits  = 2048
-}
+# resource "tls_private_key" "global_key" {
+#   algorithm = "RSA"
+#   rsa_bits  = 2048
+# }
 
-resource "local_file" "ssh_private_key_pem" {
-  filename          = "${path.module}/id_rsa"
-  sensitive_content = tls_private_key.global_key.private_key_pem
-  file_permission   = "0600"
-}
+# resource "local_file" "ssh_private_key_pem" {
+#   filename          = "${path.module}/id_rsa"
+#   sensitive_content = tls_private_key.global_key.private_key_pem
+#   file_permission   = "0600"
+# }
 
-resource "local_file" "ssh_public_key_openssh" {
-  filename = "${path.module}/id_rsa.pub"
-  content  = tls_private_key.global_key.public_key_openssh
-}
+# resource "local_file" "ssh_public_key_openssh" {
+#   filename = "${path.module}/id_rsa.pub"
+#   content  = tls_private_key.global_key.public_key_openssh
+# }
 
-# Temporary key pair used for SSH accesss
+# resource "aws_key_pair" "quickstart_key_pair" {
+#   key_name_prefix = "${var.prefix}-rancher-"
+#   public_key      = tls_private_key.global_key.public_key_openssh
+# }
+
 resource "aws_key_pair" "quickstart_key_pair" {
-  key_name_prefix = "${var.prefix}-rancher-"
-  public_key      = tls_private_key.global_key.public_key_openssh
+  key_name_prefix = "rancher"
+  public_key      = file(join(".", [var.private_key_path,"pub"]))
 }
 
 # AWS EC2 instance for creating a single node RKE cluster and installing the Rancher server
@@ -54,7 +58,8 @@ resource "aws_instance" "rancher_server" {
       type        = "ssh"
       host        = self.public_ip
       user        = local.node_username
-      private_key = tls_private_key.global_key.private_key_pem
+      # private_key = tls_private_key.global_key.private_key_pem
+      private_key = file(var.private_key_path)
     }
   }
 
@@ -109,7 +114,8 @@ resource "aws_instance" "quickstart_node" {
       type        = "ssh"
       host        = self.public_ip
       user        = local.node_username
-      private_key = tls_private_key.global_key.private_key_pem
+      # private_key = tls_private_key.global_key.private_key_pem
+      private_key = file(var.private_key_path)
     }
   }
 
