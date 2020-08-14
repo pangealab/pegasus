@@ -1,0 +1,3 @@
+![Intro](./docs/pegasus.png)
+
+Terraform with Amazon Provider Rancher RKE (Rancher Kubernetes Engine) Project to install Rancher on a single-node RKE cluster, then will provision another single-node workload cluster using a Custom cluster in Rancher. This setup provides easy access to the core Rancher functionality while establishing a foundation that can be easily expanded to a full HA Rancher server.
