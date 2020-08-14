@@ -56,9 +56,13 @@ resource "aws_security_group" "rancher_sg_allowall" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Creator = "rancher-quickstart"
-  }
+  tags = merge(
+    local.common_tags,
+    map(
+      "Name", "Rancher Allow All"
+    )
+  )
+
 }
 
 # AWS EC2 instance for creating a single node RKE cluster and installing the Rancher server
@@ -159,7 +163,7 @@ resource "aws_instance" "quickstart_node" {
       "Name", "Rancher Node"
     )
   )
-  
+
 }
 
 # Node Elastic IP
@@ -169,7 +173,7 @@ resource "aws_eip" "node_eip" {
   tags = merge(
     local.common_tags,
     map(
-      "Name", "${var.prefix}-quickstart-node-eip"
+      "Name", "Rancher Node"
     )
   )
 }
