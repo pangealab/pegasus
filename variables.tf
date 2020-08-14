@@ -36,6 +36,13 @@ variable "rke_version" {
   default     = "v1.1.4"
 }
 
+# KUBECT Version
+variable "kubectl_version" {
+  type        = string
+  description = "Kubectl version to install on Rancher Server"
+  default     = "v1.18.0"
+}
+
 # VPC CIDR
 variable "vpc_cidr" {
   description = "The CIDR block for the VPC, e.g: 13.0.0.0/16"
