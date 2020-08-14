@@ -17,7 +17,7 @@
 variable "aws_region" {
   type        = string
   description = "AWS region used for all resources"
-  default     = "us-east-1"
+  default     = "us-east-2"
 }
 
 variable "prefix" {
@@ -72,8 +72,8 @@ variable "rancher_version" {
 variable "rancher_server_admin_password" {
   type        = string
   description = "Admin password to use for Rancher server bootstrap"
+  default = "changeit"
 }
-
 
 # Local variables used to reduce repetition
 locals {
@@ -83,9 +83,11 @@ locals {
 # VPC CIDR
 variable "vpc_cidr" {
   description = "The CIDR block for the VPC, e.g: 13.0.0.0/16"
+  default = "13.0.0.0/16"
 }
 
 # SUBNET CIDR
 variable "subnet_cidr" {
   description = "The CIDR block for the public subnet, e.g: 13.0.1.0/24"
+  default = "13.0.1.0/24"
 }
