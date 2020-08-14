@@ -1,19 +1,9 @@
-# Variables for AWS infrastructure module
+# Local variables used to reduce repetition
+locals {
+  node_username = "ubuntu"
+}
 
-// TODO - use null defaults
-
-# Required
-# variable "aws_access_key" {
-#   type        = string
-#   description = "AWS access key used to create infrastructure"
-# }
-
-# Required
-# variable "aws_secret_key" {
-#   type        = string
-#   description = "AWS secret key used to create AWS infrastructure"
-# }
-
+# Variables
 variable "aws_region" {
   type        = string
   description = "AWS region used for all resources"
@@ -73,11 +63,6 @@ variable "rancher_server_admin_password" {
   type        = string
   description = "Admin password to use for Rancher server bootstrap"
   default = "changeit"
-}
-
-# Local variables used to reduce repetition
-locals {
-  node_username = "ubuntu"
 }
 
 # VPC CIDR

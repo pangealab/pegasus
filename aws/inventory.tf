@@ -1,8 +1,3 @@
-# Data for AWS module
-
-# AWS data
-# ----------------------------------------------------------
-
 # Use latest Ubuntu 18.04 AMI
 data "aws_ami" "ubuntu" {
   most_recent = true

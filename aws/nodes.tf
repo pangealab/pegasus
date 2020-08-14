@@ -1,19 +1,3 @@
-# Rancher Comon Resources
-module "rancher_common" {
-  source = "../rancher-common"
-  node_public_ip         = aws_instance.rancher_server.public_ip
-  node_internal_ip       = aws_instance.rancher_server.private_ip
-  node_username          = local.node_username
-  ssh_private_key_pem    = tls_private_key.global_key.private_key_pem
-  rke_kubernetes_version = var.rke_kubernetes_version
-  cert_manager_version = var.cert_manager_version
-  rancher_version      = var.rancher_version
-  rancher_server_dns = join(".", ["rancher", aws_instance.rancher_server.public_ip, "xip.io"])
-  admin_password     = var.rancher_server_admin_password
-  workload_kubernetes_version = var.workload_kubernetes_version
-  workload_cluster_name       = "quickstart-aws-custom"
-}
-
 # SSH key pair
 resource "tls_private_key" "global_key" {
   algorithm = "RSA"
@@ -35,34 +19,6 @@ resource "local_file" "ssh_public_key_openssh" {
 resource "aws_key_pair" "quickstart_key_pair" {
   key_name_prefix = "${var.prefix}-rancher-"
   public_key      = tls_private_key.global_key.public_key_openssh
-}
-
-# Security group to allow all traffic
-resource "aws_security_group" "rancher_sg_allowall" {
-  name        = "${var.prefix}-rancher-allowall"
-  description = "Rancher quickstart - allow all traffic"
-
-  ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = merge(
-    local.common_tags,
-    map(
-      "Name", "Rancher Allow All"
-    )
-  )
-
 }
 
 # AWS EC2 instance for creating a single node RKE cluster and installing the Rancher server
