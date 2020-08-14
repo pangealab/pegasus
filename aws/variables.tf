@@ -29,13 +29,13 @@ variable "prefix" {
 variable "rancher_instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
-  default     = "t3a.medium"
+  default     = "r5a.large"
 }
 
 variable "node_instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
-  default     = "t3a.medium"
+  default     = "r5a.xlarge"
 }
 
 variable "docker_version" {
