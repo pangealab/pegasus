@@ -1,23 +1,38 @@
 # Variables for AWS infrastructure module
 
-// TODO - use null defaults
+# VPC CIDR
+variable "vpc_cidr" {
+  description = "The CIDR block for the VPC, e.g: 13.0.0.0/16"
+  default = "13.0.0.0/16"
+}
 
-# Required
-variable "aws_access_key" {
-  type        = string
-  description = "AWS access key used to create infrastructure"
+# SUBNET CIDR
+variable "subnet_cidr" {
+  description = "The CIDR block for the public subnet, e.g: 13.0.1.0/24"
+  default = "13.0.1.0/24"
+}
+
+variable "private_key" {
+  description = "The local public key , e.g. ~/.ssh/rancher"
+  default     = "~/.ssh/rancher"
 }
 
 # Required
-variable "aws_secret_key" {
-  type        = string
-  description = "AWS secret key used to create AWS infrastructure"
-}
+# variable "aws_access_key" {
+#   type        = string
+#   description = "AWS access key used to create infrastructure"
+# }
+
+# Required
+# variable "aws_secret_key" {
+#   type        = string
+#   description = "AWS secret key used to create AWS infrastructure"
+# }
 
 variable "aws_region" {
   type        = string
   description = "AWS region used for all resources"
-  default     = "us-east-1"
+  default     = "us-east-2"
 }
 
 variable "prefix" {
@@ -29,7 +44,7 @@ variable "prefix" {
 variable "instance_type" {
   type        = string
   description = "Instance type used for all EC2 instances"
-  default     = "t3a.medium"
+  default     = "r5a.xlarge"
 }
 
 variable "docker_version" {
@@ -68,8 +83,13 @@ variable "rancher_server_admin_password" {
   description = "Admin password to use for Rancher server bootstrap"
 }
 
-
 # Local variables used to reduce repetition
 locals {
   node_username = "ubuntu"
+  private_key = file(var.private_key)
+  public_key = file(join(".", [var.private_key,"pub"]))
+  common_tags = map(
+    "Project", "rancher",
+    "Creator", "rancher-quickstart"
+  )
 }
