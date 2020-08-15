@@ -233,7 +233,7 @@ resource "aws_instance" "quickstart_node" {
   tags = merge(
     local.common_tags,
     map(
-      "Name", "Rancher Node"
+      "Name", "Rancher Node 1"
     )
   )
 }
