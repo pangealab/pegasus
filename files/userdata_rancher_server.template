@@ -19,3 +19,29 @@ sudo mv ./kubectl /usr/local/bin/kubectl
 # Install Helm
 export DESIRED_VERSION="${helm_version}" && \
 curl -L https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+# Create SSH Key
+echo -e "${private_key}" > ~/.ssh/id_rsa
+
+# Get Public & Private IPs
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+PUBLIC_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/public-ipv4)
+PRIVATE_IP=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/local-ipv4)
+
+# Configure Cluster
+cat << EOF > rancher-server.yml
+nodes:
+  - address: $PUBLIC_IP
+    internal_address: $PRIVATE_IP
+    user: ubuntu
+    role: [controlplane,etcd,worker]
+    ssh_key_path: ~/.ssh/rancher
+services:
+  etcd:
+    snapshot: true
+    creation: 6h
+    retention: 24h
+EOF
+
+# Install RKE
+rke up --config rancher-cluster.yml

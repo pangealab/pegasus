@@ -117,6 +117,7 @@ resource "aws_instance" "rancher_server" {
       kubectl_version = var.kubectl_version
       helm_version = var.helm_version
       username = local.node_username
+      private_key = local.private_key
     }
   )
   root_block_device {
