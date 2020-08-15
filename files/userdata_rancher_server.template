@@ -35,7 +35,7 @@ nodes:
     internal_address: $PRIVATE_IP
     user: ubuntu
     role: [controlplane,etcd,worker]
-    ssh_key_path: ~/.ssh/rancher
+    ssh_key_path: ~/.ssh/id_rsa
 services:
   etcd:
     snapshot: true
