@@ -46,7 +46,6 @@ variable "rancher_version" {
 variable "rancher_server_dns" {
   type        = string
   description = "DNS host name of the Rancher server"
-  default     = "rke.sytes.net"
 }
 
 # Required
